@@ -2,8 +2,9 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import RatingStars from "@/components/RatingStars";
+import { Star } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { motion } from "framer-motion";
 
 interface ReviewFormProps {
   restaurantId: number;
@@ -14,6 +15,7 @@ const ReviewForm = ({ restaurantId, onReviewSubmitted }: ReviewFormProps) => {
   const [rating, setRating] = useState(5);
   const [content, setContent] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [hoveredRating, setHoveredRating] = useState<number | null>(null);
   const { toast } = useToast();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -32,64 +34,77 @@ const ReviewForm = ({ restaurantId, onReviewSubmitted }: ReviewFormProps) => {
     }, 1000);
   };
 
+  const handleStarHover = (index: number) => {
+    setHoveredRating(index);
+  };
+
+  const handleStarLeave = () => {
+    setHoveredRating(null);
+  };
+
+  const handleStarClick = (index: number) => {
+    setRating(index);
+  };
+
+  const renderStars = () => {
+    return Array.from({ length: 5 }, (_, i) => i + 1).map((index) => (
+      <motion.div
+        key={index}
+        className="cursor-pointer"
+        whileHover={{ scale: 1.2 }}
+        whileTap={{ scale: 0.95 }}
+        onMouseEnter={() => handleStarHover(index)}
+        onMouseLeave={handleStarLeave}
+        onClick={() => handleStarClick(index)}
+      >
+        <Star
+          size={28}
+          className={`${
+            index <= (hoveredRating || rating)
+              ? "fill-yellow-400 text-yellow-400"
+              : "text-gray-300"
+          } transition-colors duration-200`}
+        />
+      </motion.div>
+    ));
+  };
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <motion.form 
+      onSubmit={handleSubmit} 
+      className="space-y-6 bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-gray-100 shadow-sm"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+    >
       <div>
-        <label className="block text-sm font-medium mb-2">Your Rating</label>
-        <div className="flex items-center gap-2">
-          <div 
-            className="flex cursor-pointer"
-            onClick={() => setRating(1)}
-          >
-            <RatingStars rating={1} size="lg" className={rating >= 1 ? "opacity-100" : "opacity-50"} />
-          </div>
-          <div 
-            className="flex cursor-pointer"
-            onClick={() => setRating(2)}
-          >
-            <RatingStars rating={1} size="lg" className={rating >= 2 ? "opacity-100" : "opacity-50"} />
-          </div>
-          <div 
-            className="flex cursor-pointer"
-            onClick={() => setRating(3)}
-          >
-            <RatingStars rating={1} size="lg" className={rating >= 3 ? "opacity-100" : "opacity-50"} />
-          </div>
-          <div 
-            className="flex cursor-pointer"
-            onClick={() => setRating(4)}
-          >
-            <RatingStars rating={1} size="lg" className={rating >= 4 ? "opacity-100" : "opacity-50"} />
-          </div>
-          <div 
-            className="flex cursor-pointer"
-            onClick={() => setRating(5)}
-          >
-            <RatingStars rating={1} size="lg" className={rating >= 5 ? "opacity-100" : "opacity-50"} />
-          </div>
+        <label className="block text-sm font-medium mb-3 text-gray-700">Your Rating</label>
+        <div className="flex items-center gap-2 justify-center md:justify-start">
+          {renderStars()}
         </div>
       </div>
       
       <div>
-        <label htmlFor="content" className="block text-sm font-medium mb-2">Your Review</label>
+        <label htmlFor="content" className="block text-sm font-medium mb-2 text-gray-700">Your Experience</label>
         <Textarea
           id="content"
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          placeholder="Share your experience with this restaurant..."
+          placeholder="Share your thoughts about this restaurant..."
           rows={4}
           required
+          className="resize-none focus:ring-2 focus:ring-gray-200 transition-all duration-200"
         />
       </div>
       
       <Button 
         type="submit" 
-        className="w-full bg-blue-500 hover:bg-blue-600"
+        className="w-full bg-black hover:bg-gray-800 text-white rounded-md transition-all duration-300"
         disabled={isSubmitting}
       >
         {isSubmitting ? "Submitting..." : "Submit Review"}
       </Button>
-    </form>
+    </motion.form>
   );
 };
 
