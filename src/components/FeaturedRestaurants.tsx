@@ -1,7 +1,8 @@
 
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { MapPin, ChevronRight } from "lucide-react";
 import RatingStars from "./RatingStars";
 
 // Mock data for featured restaurants
@@ -9,89 +10,92 @@ const featuredRestaurants = [
   {
     id: 1,
     name: "The Garden Table",
-    cuisine: "Mediterranean",
+    cuisine: "Contemporary American",
+    location: "San Francisco, CA",
     averageRating: 4.7,
-    totalReviews: 128,
-    topDish: "Grilled Octopus",
-    topDishRating: 4.9,
-    image: "garden-table"
+    totalReviews: 182,
+    image: "garden-table",
+    topDishes: ["Truffle Pasta", "Roasted Duck", "Hummus"]
   },
   {
     id: 2,
-    name: "Sushi Master",
+    name: "Sakura Sushi & Ramen",
     cuisine: "Japanese",
-    averageRating: 4.5,
-    totalReviews: 94,
-    topDish: "Dragon Roll",
-    topDishRating: 4.8,
-    image: "sushi-master"
+    location: "Los Angeles, CA",
+    averageRating: 4.6,
+    totalReviews: 156,
+    image: "sushi-master",
+    topDishes: ["Spicy Tuna Roll", "Tonkotsu Ramen", "Gyoza"]
   },
   {
     id: 3,
-    name: "Pasta Paradise",
+    name: "Bella Napoli",
     cuisine: "Italian",
-    averageRating: 4.3,
-    totalReviews: 156,
-    topDish: "Truffle Linguine",
-    topDishRating: 4.7,
-    image: "pasta-paradise"
+    location: "New York, NY",
+    averageRating: 4.5,
+    totalReviews: 137,
+    image: "pasta-paradise",
+    topDishes: ["Margherita Pizza", "Lasagne", "Tiramisu"]
+  },
+  {
+    id: 4,
+    name: "Spice Route",
+    cuisine: "Indian",
+    location: "Chicago, IL",
+    averageRating: 4.8,
+    totalReviews: 117,
+    image: "pasta-paradise",
+    topDishes: ["Butter Chicken", "Garlic Naan", "Biryani"]
   }
 ];
 
 const FeaturedRestaurants = () => {
   return (
-    <section className="py-16 px-4">
+    <section className="py-12 px-4 bg-white">
       <div className="container mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Featured Restaurants</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Discover top-rated restaurants based on their menu items. Our unique rating system helps you find the best dishes at each restaurant.
-          </p>
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="text-2xl font-bold">Featured Restaurants</h2>
+          <Link to="/restaurants" className="text-blue-500 flex items-center text-sm">
+            View all <ChevronRight className="h-4 w-4 ml-1" />
+          </Link>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {featuredRestaurants.map((restaurant) => (
-            <Card key={restaurant.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-              <div className="bg-gray-200 h-48 flex items-center justify-center">
-                <span className="text-gray-500">{restaurant.name} Image</span>
-              </div>
-              <CardHeader className="pb-2">
-                <CardTitle>{restaurant.name}</CardTitle>
-                <CardDescription>{restaurant.cuisine} Cuisine</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center mb-2">
-                  <RatingStars rating={restaurant.averageRating} />
-                  <span className="ml-2 text-sm text-gray-600">
-                    {restaurant.averageRating} ({restaurant.totalReviews} reviews)
+            <Card key={restaurant.id} className="overflow-hidden border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
+              <div className="relative">
+                <div className="bg-gray-200 h-48 relative overflow-hidden">
+                  <span className="absolute top-2 left-2 bg-blue-500 text-white px-2 py-1 text-xs rounded-md">
+                    {restaurant.cuisine}
                   </span>
+                  <img src={`/placeholder.svg`} alt={restaurant.name} className="w-full h-full object-cover" />
                 </div>
-                <div className="mt-4 text-sm">
-                  <p className="text-gray-600">Top Dish:</p>
-                  <div className="flex items-center justify-between">
-                    <p className="font-medium">{restaurant.topDish}</p>
-                    <div className="flex items-center">
-                      <RatingStars rating={restaurant.topDishRating} size="sm" />
-                      <span className="ml-1 text-sm text-gray-600">
-                        {restaurant.topDishRating}
-                      </span>
-                    </div>
+                <div className="absolute bottom-2 left-2 flex items-center">
+                  <div className="bg-white px-2 py-1 rounded-md shadow flex items-center text-sm">
+                    <RatingStars rating={restaurant.averageRating} size="sm" />
+                    <span className="ml-1 font-medium">{restaurant.averageRating}</span>
+                    <span className="text-xs text-gray-500 ml-1">({restaurant.totalReviews})</span>
                   </div>
                 </div>
+              </div>
+              <CardContent className="p-4">
+                <div className="mb-3">
+                  <h3 className="font-semibold mb-1">{restaurant.name}</h3>
+                  <div className="flex items-center text-gray-500 text-sm">
+                    <MapPin className="h-3 w-3 mr-1" />
+                    {restaurant.location}
+                  </div>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {restaurant.topDishes.map((dish, index) => (
+                    <span key={index} className="text-xs px-2 py-1 bg-gray-100 rounded-full">
+                      {dish}
+                    </span>
+                  ))}
+                </div>
               </CardContent>
-              <CardFooter>
-                <Link to={`/restaurant/${restaurant.id}`} className="w-full">
-                  <Button variant="outline" className="w-full">View Menu & Reviews</Button>
-                </Link>
-              </CardFooter>
             </Card>
           ))}
-        </div>
-        
-        <div className="text-center mt-12">
-          <Link to="/restaurants">
-            <Button variant="outline" size="lg">See All Restaurants</Button>
-          </Link>
         </div>
       </div>
     </section>
