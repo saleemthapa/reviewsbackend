@@ -1,14 +1,17 @@
 
 import { Card, CardContent } from "@/components/ui/card";
-import { ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { MapPin, ChevronRight } from "lucide-react";
 import RatingStars from "./RatingStars";
 
+// Mock data for featured restaurants
 const topDishes = [
   {
     id: 1,
     name: "Truffle Mushroom Pasta",
     restaurant: "The Garden Grill",
+    restaurantId: 1,
     price: 27.99,
     rating: 4.9,
     reviews: 123,
@@ -19,6 +22,7 @@ const topDishes = [
     id: 2,
     name: "Rainbow Roll Deluxe",
     restaurant: "Sakura Sushi & Ramen",
+    restaurantId: 2,
     price: 22.50,
     rating: 4.8,
     reviews: 95,
@@ -29,6 +33,7 @@ const topDishes = [
     id: 3,
     name: "Neapolitan Margherita",
     restaurant: "Bella Napoli",
+    restaurantId: 3,
     price: 18.95,
     rating: 4.7,
     reviews: 143,
@@ -39,6 +44,7 @@ const topDishes = [
     id: 4,
     name: "Butter Chicken",
     restaurant: "Spice House",
+    restaurantId: 4,
     price: 19.95,
     rating: 4.8,
     reviews: 167,
@@ -60,7 +66,7 @@ const TopRatedDishes = () => {
           </Link>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {topDishes.map((dish) => (
             <Card key={dish.id} className="overflow-hidden border border-gray-200 hover:shadow-md transition-shadow">
               <div className="bg-gray-200 h-48 relative overflow-hidden">
@@ -73,7 +79,9 @@ const TopRatedDishes = () => {
                 <div className="flex justify-between items-start mb-2">
                   <h3 className="font-medium">{dish.name}</h3>
                 </div>
-                <p className="text-sm text-gray-500 mb-2">{dish.restaurant}</p>
+                <Link to={`/restaurant/${dish.restaurantId}`} className="text-sm text-blue-500 hover:underline mb-2 block">
+                  {dish.restaurant}
+                </Link>
                 <div className="flex items-center mb-2">
                   <RatingStars rating={dish.rating} size="sm" />
                   <span className="ml-2 text-sm">
