@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 const testimonials = [
   {
     id: 1,
-    text: "PlateRate has completely changed how I choose what to eat. I used to waste money on disappointing dishes, but now I can see exactly what's worth ordering.",
+    text: "Reviewsbymenu has completely changed how I choose what to eat. I used to waste money on disappointing dishes, but now I can see exactly what's worth ordering.",
     author: "Emma W.",
     title: "Food Enthusiast"
   },

@@ -23,7 +23,7 @@ const HowItWorks = () => {
   return (
     <section className="py-16 px-4 bg-white">
       <div className="container mx-auto max-w-5xl">
-        <h2 className="text-3xl font-bold text-center mb-12">How PlateRate Works</h2>
+        <h2 className="text-3xl font-bold text-center mb-12">How Reviewsbymenu Works</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {steps.map((step, index) => (

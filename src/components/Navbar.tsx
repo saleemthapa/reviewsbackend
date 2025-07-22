@@ -26,7 +26,7 @@ const Navbar = () => {
               className="text-primary group-hover:text-primary/80 transition-colors"
               whileHover={{ scale: 1.05 }}
             >
-              FoodieReviews
+              Reviewsbymenu
             </motion.span>
           </Link>
           

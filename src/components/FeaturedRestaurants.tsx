@@ -85,7 +85,7 @@ const FeaturedRestaurants = () => {
                 </div>
                 <CardContent className="p-4">
                   <div className="mb-3">
-                    <h3 className="font-semibold mb-1">{restaurant.name}</h3>
+                  <h3 className="font-semibold mb-1 text-left">{restaurant.name}</h3>
                     <div className="flex items-center text-gray-500 text-sm">
                       <MapPin className="h-3 w-3 mr-1" />
                       {restaurant.location}
