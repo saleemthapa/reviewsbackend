@@ -7,6 +7,9 @@ import { useState } from 'react';
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import RestaurantDetail from "./pages/RestaurantDetail";
+import MenuItemDetail from "./pages/MenuItemDetail";
+import Search from "./pages/Search";
+import Profile from "./pages/Profile";
 
 const App = () => {
   // Create a new QueryClient instance inside the component
@@ -21,6 +24,9 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/restaurant/:id" element={<RestaurantDetail />} />
+            <Route path="/menu-item/:id" element={<MenuItemDetail />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/profile" element={<Profile />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

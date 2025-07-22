@@ -79,7 +79,7 @@ const TopRatedDishes = () => {
                 <div className="flex justify-between items-start mb-2">
                   <h3 className="font-medium">{dish.name}</h3>
                 </div>
-                <Link to={`/restaurant/${dish.restaurantId}`} className="text-sm text-blue-500 hover:underline mb-2 block">
+                <Link to={`/menu-item/${dish.id}`} className="text-sm text-primary hover:underline mb-2 block">
                   {dish.restaurant}
                 </Link>
                 <div className="flex items-center mb-2">

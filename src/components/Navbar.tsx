@@ -2,7 +2,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Search, Menu, X } from "lucide-react";
+import { Search, Menu, X, User } from "lucide-react";
+import { motion } from "framer-motion";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,36 +13,42 @@ const Navbar = () => {
   };
 
   return (
-    <header className="border-b sticky top-0 bg-white z-50">
+    <motion.header 
+      className="border-b border-border/50 sticky top-0 bg-card/80 backdrop-blur-sm z-50"
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <div className="flex items-center gap-8">
-          <Link to="/" className="text-lg font-bold text-primary flex items-center">
-            <span className="text-blue-500">Reviews by Menu</span>
+          <Link to="/" className="text-lg font-bold text-foreground flex items-center group">
+            <motion.span 
+              className="text-primary group-hover:text-primary/80 transition-colors"
+              whileHover={{ scale: 1.05 }}
+            >
+              FoodieReviews
+            </motion.span>
           </Link>
           
           <nav className="hidden md:flex space-x-6">
-            <Link to="/" className="text-sm font-medium hover:text-blue-500">Home</Link>
-            <Link to="/restaurants" className="text-sm font-medium hover:text-blue-500">Restaurants</Link>
-            <Link to="/trending" className="text-sm font-medium hover:text-blue-500">Trending</Link>
-            <Link to="/about" className="text-sm font-medium hover:text-blue-500">About</Link>
-            <Link to="/restaurant-sign-up" className="text-sm font-medium hover:text-blue-500">Restaurant Signup</Link>
+            <Link to="/" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Home</Link>
+            <Link to="/search" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Search</Link>
           </nav>
         </div>
         
         <div className="flex items-center space-x-4">
-          <button className="text-gray-600 hover:text-blue-500">
-            <Search className="h-5 w-5" />
-          </button>
-          <div className="hidden md:block">
-            <Link to="/sign-in">
-              <Button variant="ghost" size="sm" className="text-blue-500">Sign In</Button>
-            </Link>
-            <Link to="/sign-up">
-              <Button size="sm" className="bg-blue-500 hover:bg-blue-600">Sign Up</Button>
-            </Link>
-          </div>
+          <Link to="/search">
+            <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+              <Search className="h-5 w-5" />
+            </Button>
+          </Link>
+          <Link to="/profile">
+            <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+              <User className="h-5 w-5" />
+            </Button>
+          </Link>
           <button 
-            className="md:hidden text-gray-600" 
+            className="md:hidden text-muted-foreground hover:text-foreground" 
             onClick={toggleMenu}
             aria-label="Toggle menu"
           >
@@ -52,25 +59,21 @@ const Navbar = () => {
       
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="md:hidden py-4 px-4 bg-white border-t">
+        <motion.div 
+          className="md:hidden py-4 px-4 bg-card border-t border-border/50"
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          exit={{ opacity: 0, height: 0 }}
+          transition={{ duration: 0.3 }}
+        >
           <nav className="flex flex-col space-y-4">
-            <Link to="/" className="text-sm font-medium hover:text-blue-500">Home</Link>
-            <Link to="/restaurants" className="text-sm font-medium hover:text-blue-500">Restaurants</Link>
-            <Link to="/trending" className="text-sm font-medium hover:text-blue-500">Trending</Link>
-            <Link to="/about" className="text-sm font-medium hover:text-blue-500">About</Link>
-            <Link to="/restaurant-sign-up" className="text-sm font-medium hover:text-blue-500">Restaurant Signup</Link>
-            <div className="flex space-x-2 pt-2 border-t border-gray-100">
-              <Link to="/sign-in" className="w-1/2">
-                <Button variant="outline" size="sm" className="w-full">Sign In</Button>
-              </Link>
-              <Link to="/sign-up" className="w-1/2">
-                <Button size="sm" className="w-full bg-blue-500 hover:bg-blue-600">Sign Up</Button>
-              </Link>
-            </div>
+            <Link to="/" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Home</Link>
+            <Link to="/search" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Search</Link>
+            <Link to="/profile" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Profile</Link>
           </nav>
-        </div>
+        </motion.div>
       )}
-    </header>
+    </motion.header>
   );
 };
 
