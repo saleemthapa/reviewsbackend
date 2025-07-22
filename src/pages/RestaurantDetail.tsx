@@ -39,23 +39,44 @@ const restaurants = [
         userName: "Emily Johnson",
         userImage: "/placeholder.svg",
         rating: 5,
+        detailedRatings: {
+          food: 5,
+          ambience: 4,
+          service: 5,
+          pricing: 4
+        },
         date: "August 12, 2023",
-        content: "Absolutely amazing experience! The truffle pasta was divine and the ambiance was perfect for our anniversary dinner. Service was attentive without being intrusive. Will definitely be coming back!"
+        content: "Absolutely amazing experience! The truffle pasta was divine and the ambiance was perfect for our anniversary dinner. Service was attentive without being intrusive. Will definitely be coming back!",
+        helpful: 12
       },
       {
         id: 2,
         userName: "Michael Chen",
         userImage: "/placeholder.svg",
         rating: 4,
+        detailedRatings: {
+          food: 4,
+          ambience: 4,
+          service: 3,
+          pricing: 4
+        },
         date: "July 28, 2023",
-        content: "Great food and atmosphere. The seasonal salad was fresh and flavorful. Only giving 4 stars because we had to wait a bit longer than expected for our table despite having a reservation."
+        content: "Great food and atmosphere. The seasonal salad was fresh and flavorful. Only giving 4 stars because we had to wait a bit longer than expected for our table despite having a reservation.",
+        helpful: 8
       },
       {
         id: 3,
         userName: "Sarah Williams",
         rating: 5,
+        detailedRatings: {
+          food: 5,
+          ambience: 5,
+          service: 5,
+          pricing: 3
+        },
         date: "June 15, 2023",
-        content: "The roasted duck is to die for! Perfectly cooked and the cherry glaze complemented it so well. The service was impeccable and the wine selection is extensive. Highly recommend!"
+        content: "The roasted duck is to die for! Perfectly cooked and the cherry glaze complemented it so well. The service was impeccable and the wine selection is extensive. Highly recommend!",
+        helpful: 15
       }
     ]
   },
@@ -88,23 +109,44 @@ const restaurants = [
         userName: "David Kim",
         userImage: "/placeholder.svg",
         rating: 5,
+        detailedRatings: {
+          food: 5,
+          ambience: 4,
+          service: 5,
+          pricing: 5
+        },
         date: "September 5, 2023",
-        content: "Best ramen in town! The broth is so rich and flavorful. The noodles had the perfect texture and the char siu was melt-in-your-mouth tender."
+        content: "Best ramen in town! The broth is so rich and flavorful. The noodles had the perfect texture and the char siu was melt-in-your-mouth tender.",
+        helpful: 9
       },
       {
         id: 2,
         userName: "Jessica Tanaka",
         rating: 4,
+        detailedRatings: {
+          food: 4,
+          ambience: 4,
+          service: 4,
+          pricing: 4
+        },
         date: "August 19, 2023",
-        content: "Really enjoyed the Dragon Roll and the Gyoza. Everything tasted fresh and authentic. Would definitely recommend!"
+        content: "Really enjoyed the Dragon Roll and the Gyoza. Everything tasted fresh and authentic. Would definitely recommend!",
+        helpful: 6
       },
       {
         id: 3,
         userName: "Robert Chen",
         userImage: "/placeholder.svg",
         rating: 5,
+        detailedRatings: {
+          food: 5,
+          ambience: 3,
+          service: 4,
+          pricing: 5
+        },
         date: "July 12, 2023",
-        content: "Excellent service and amazing food. The spicy tuna roll is a must-try. Will be coming back soon!"
+        content: "Excellent service and amazing food. The spicy tuna roll is a must-try. Will be coming back soon!",
+        helpful: 11
       }
     ]
   },

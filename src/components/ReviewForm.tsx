@@ -12,9 +12,15 @@ interface ReviewFormProps {
 }
 
 const ReviewForm = ({ restaurantId, onReviewSubmitted }: ReviewFormProps) => {
-  const [rating, setRating] = useState(5);
+  const [ratings, setRatings] = useState({
+    food: 5,
+    ambience: 5,
+    service: 5,
+    pricing: 5
+  });
   const [content, setContent] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
   const [hoveredRating, setHoveredRating] = useState<number | null>(null);
   const { toast } = useToast();
 
@@ -26,41 +32,49 @@ const ReviewForm = ({ restaurantId, onReviewSubmitted }: ReviewFormProps) => {
     setTimeout(() => {
       setIsSubmitting(false);
       setContent("");
+      setRatings({
+        food: 5,
+        ambience: 5,
+        service: 5,
+        pricing: 5
+      });
       toast({
         title: "Review submitted",
-        description: "Thank you for your feedback!",
+        description: "Thank you for your detailed feedback!",
       });
       onReviewSubmitted();
     }, 1000);
   };
 
-  const handleStarHover = (index: number) => {
+  const handleStarHover = (category: string, index: number) => {
+    setHoveredCategory(category);
     setHoveredRating(index);
   };
 
   const handleStarLeave = () => {
+    setHoveredCategory(null);
     setHoveredRating(null);
   };
 
-  const handleStarClick = (index: number) => {
-    setRating(index);
+  const handleStarClick = (category: string, index: number) => {
+    setRatings(prev => ({ ...prev, [category]: index }));
   };
 
-  const renderStars = () => {
+  const renderStars = (category: string, currentRating: number) => {
     return Array.from({ length: 5 }, (_, i) => i + 1).map((index) => (
       <motion.div
         key={index}
         className="cursor-pointer"
         whileHover={{ scale: 1.2 }}
         whileTap={{ scale: 0.95 }}
-        onMouseEnter={() => handleStarHover(index)}
+        onMouseEnter={() => handleStarHover(category, index)}
         onMouseLeave={handleStarLeave}
-        onClick={() => handleStarClick(index)}
+        onClick={() => handleStarClick(category, index)}
       >
         <Star
-          size={28}
+          size={24}
           className={`${
-            index <= (hoveredRating || rating)
+            index <= (hoveredCategory === category && hoveredRating ? hoveredRating : currentRating)
               ? "fill-yellow-400 text-yellow-400"
               : "text-gray-300"
           } transition-colors duration-200`}
@@ -69,40 +83,67 @@ const ReviewForm = ({ restaurantId, onReviewSubmitted }: ReviewFormProps) => {
     ));
   };
 
+  const ratingCategories = [
+    { key: 'food', label: 'Food Quality', icon: '🍽️' },
+    { key: 'ambience', label: 'Ambience', icon: '🏮' },
+    { key: 'service', label: 'Customer Service', icon: '👥' },
+    { key: 'pricing', label: 'Value for Money', icon: '💰' }
+  ];
+
+  const overallRating = Object.values(ratings).reduce((sum, rating) => sum + rating, 0) / 4;
+
   return (
     <motion.form 
       onSubmit={handleSubmit} 
-      className="space-y-6 bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-gray-100 shadow-sm"
+      className="space-y-6 bg-card/80 backdrop-blur-sm rounded-2xl p-8 border border-border/50 shadow-elegant"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
     >
-      <div>
-        <label className="block text-sm font-medium mb-3 text-gray-700">Your Rating</label>
-        <div className="flex items-center gap-2 justify-center md:justify-start">
-          {renderStars()}
-        </div>
+      {/* Overall Rating Display */}
+      <div className="text-center pb-6 border-b border-border/50">
+        <h3 className="text-lg font-semibold mb-2 text-foreground">Overall Rating</h3>
+        <div className="text-3xl font-bold text-primary">{overallRating.toFixed(1)}</div>
+        <p className="text-sm text-muted-foreground">Based on your detailed ratings below</p>
+      </div>
+
+      {/* Individual Rating Categories */}
+      <div className="space-y-6">
+        {ratingCategories.map((category) => (
+          <div key={category.key}>
+            <label className="block text-sm font-medium mb-3 text-foreground flex items-center gap-2">
+              <span className="text-lg">{category.icon}</span>
+              {category.label}
+            </label>
+            <div className="flex items-center gap-2 justify-center md:justify-start">
+              {renderStars(category.key, ratings[category.key as keyof typeof ratings])}
+              <span className="ml-2 text-sm text-muted-foreground font-medium">
+                {ratings[category.key as keyof typeof ratings]}/5
+              </span>
+            </div>
+          </div>
+        ))}
       </div>
       
       <div>
-        <label htmlFor="content" className="block text-sm font-medium mb-2 text-gray-700">Your Experience</label>
+        <label htmlFor="content" className="block text-sm font-medium mb-2 text-foreground">Your Experience</label>
         <Textarea
           id="content"
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          placeholder="Share your thoughts about this restaurant..."
+          placeholder="Share your thoughts about this restaurant... What did you love? What could be improved?"
           rows={4}
           required
-          className="resize-none focus:ring-2 focus:ring-gray-200 transition-all duration-200"
+          className="resize-none focus:ring-2 focus:ring-primary/20 transition-all duration-200 bg-background/50"
         />
       </div>
       
       <Button 
         type="submit" 
-        className="w-full bg-black hover:bg-gray-800 text-white rounded-md transition-all duration-300"
+        className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl transition-all duration-300"
         disabled={isSubmitting}
       >
-        {isSubmitting ? "Submitting..." : "Submit Review"}
+        {isSubmitting ? "Submitting..." : "Submit Detailed Review"}
       </Button>
     </motion.form>
   );
