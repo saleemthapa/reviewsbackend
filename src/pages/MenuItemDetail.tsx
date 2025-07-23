@@ -45,19 +45,19 @@ const MenuItemDetail = () => {
     <div className="min-h-screen bg-gradient-subtle">
       <Navbar />
       
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
+      <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 md:py-6 lg:py-8">
         {/* Back Button */}
         <Link 
           to={`/restaurant/${menuItem.restaurantId}`}
-          className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-4 sm:mb-6"
+          className="inline-flex items-center gap-1.5 sm:gap-2 text-muted-foreground hover:text-foreground transition-colors mb-3 sm:mb-4 md:mb-6 text-sm sm:text-base"
         >
-          <ArrowLeft className="h-4 w-4" />
+          <ArrowLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           Back to Restaurant
         </Link>
 
         {/* Menu Item Header */}
         <motion.div 
-          className="bg-card/80 backdrop-blur-sm rounded-2xl shadow-elegant overflow-hidden mb-6 sm:mb-8 border border-border/50"
+          className="bg-card/80 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-elegant overflow-hidden mb-4 sm:mb-6 md:mb-8 border border-border/50"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -67,13 +67,13 @@ const MenuItemDetail = () => {
               <img 
                 src={menuItem.image} 
                 alt={menuItem.name}
-                className="w-full h-48 sm:h-64 lg:h-96 object-cover"
+                className="w-full h-40 xs:h-48 sm:h-64 lg:h-96 object-cover"
               />
             </div>
             
-            <div className="w-full lg:w-1/2 p-4 sm:p-6 lg:p-8">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
-                <MapPin className="h-4 w-4" />
+            <div className="w-full lg:w-1/2 p-3 xs:p-4 sm:p-6 lg:p-8">
+              <div className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-muted-foreground mb-2">
+                <MapPin className="h-3 w-3 sm:h-4 sm:w-4" />
                 <Link 
                   to={`/restaurant/${menuItem.restaurantId}`}
                   className="hover:text-primary transition-colors"
@@ -82,22 +82,24 @@ const MenuItemDetail = () => {
                 </Link>
               </div>
               
-              <h1 className="text-2xl sm:text-3xl font-bold mb-4 text-foreground">{menuItem.name}</h1>
+              <h1 className="text-xl xs:text-2xl sm:text-3xl font-bold mb-3 sm:mb-4 text-foreground leading-tight">{menuItem.name}</h1>
               
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-                <div className="flex items-center gap-3">
+              <div className="flex flex-col gap-3 sm:gap-4 mb-4 sm:mb-6">
+                <div className="flex flex-col xs:flex-row xs:items-center gap-2 xs:gap-3">
                   <RatingStars rating={averageRating} size="lg" />
-                  <span className="text-lg font-medium text-foreground">{averageRating.toFixed(1)}</span>
-                  <span className="text-muted-foreground">({reviewCount} reviews)</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-base sm:text-lg font-medium text-foreground">{averageRating.toFixed(1)}</span>
+                    <span className="text-xs sm:text-sm text-muted-foreground">({reviewCount} reviews)</span>
+                  </div>
                 </div>
-                <div className="text-2xl sm:text-3xl font-bold text-primary">${menuItem.price}</div>
+                <div className="text-xl xs:text-2xl sm:text-3xl font-bold text-primary">${menuItem.price}</div>
               </div>
               
-              <p className="text-muted-foreground mb-6 leading-relaxed text-sm sm:text-base">{menuItem.description}</p>
+              <p className="text-muted-foreground mb-4 sm:mb-6 leading-relaxed text-xs xs:text-sm sm:text-base">{menuItem.description}</p>
               
               <Button 
                 onClick={() => setShowReviewForm(!showReviewForm)}
-                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
+                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-sm sm:text-base py-2.5 sm:py-3"
               >
                 {showReviewForm ? "Cancel Review" : "Write a Review"}
               </Button>
@@ -108,13 +110,13 @@ const MenuItemDetail = () => {
         {/* Review Form */}
         {showReviewForm && (
           <motion.div 
-            className="mb-6 sm:mb-8"
+            className="mb-4 sm:mb-6 md:mb-8"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <h3 className="text-xl font-semibold mb-4 text-foreground">Write Your Review</h3>
+            <h3 className="text-lg xs:text-xl font-semibold mb-3 sm:mb-4 text-foreground">Write Your Review</h3>
             <MenuItemReviewForm 
               menuItemId={itemId} 
               restaurantId={menuItem.restaurantId} 
@@ -124,33 +126,33 @@ const MenuItemDetail = () => {
         )}
 
         {/* Ingredients & Allergens */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 md:gap-6 mb-4 sm:mb-6 md:mb-8">
           <motion.div 
-            className="bg-card/80 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-border/50"
+            className="bg-card/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 xs:p-4 sm:p-6 border border-border/50"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <h3 className="text-lg font-semibold mb-4 text-foreground">Ingredients</h3>
-            <ul className="space-y-2">
+            <h3 className="text-base xs:text-lg font-semibold mb-3 sm:mb-4 text-foreground">Ingredients</h3>
+            <ul className="space-y-1.5 sm:space-y-2">
               {menuItem.ingredients.map((ingredient, index) => (
-                <li key={index} className="text-muted-foreground text-sm sm:text-base">{ingredient}</li>
+                <li key={index} className="text-muted-foreground text-xs xs:text-sm sm:text-base">{ingredient}</li>
               ))}
             </ul>
           </motion.div>
           
           <motion.div 
-            className="bg-card/80 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-border/50"
+            className="bg-card/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 xs:p-4 sm:p-6 border border-border/50"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            <h3 className="text-lg font-semibold mb-4 text-foreground">Allergens</h3>
-            <div className="flex flex-wrap gap-2">
+            <h3 className="text-base xs:text-lg font-semibold mb-3 sm:mb-4 text-foreground">Allergens</h3>
+            <div className="flex flex-wrap gap-1.5 sm:gap-2">
               {menuItem.allergens.map((allergen, index) => (
                 <span 
                   key={index}
-                  className="bg-destructive/10 text-destructive px-3 py-1 rounded-full text-sm border border-destructive/20"
+                  className="bg-destructive/10 text-destructive px-2.5 xs:px-3 py-1 rounded-full text-xs sm:text-sm border border-destructive/20"
                 >
                   {allergen}
                 </span>
@@ -161,21 +163,21 @@ const MenuItemDetail = () => {
 
         {/* Reviews Section */}
         <motion.div 
-          className="bg-card/80 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-border/50"
+          className="bg-card/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 xs:p-4 sm:p-6 border border-border/50"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          <h3 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6 text-foreground">Customer Reviews</h3>
+          <h3 className="text-base xs:text-lg sm:text-xl font-semibold mb-3 sm:mb-4 md:mb-6 text-foreground">Customer Reviews</h3>
           
           {reviews.length > 0 ? (
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 sm:gap-4">
               {reviews.map((review) => (
                 <ReviewCard key={review.id} review={review} />
               ))}
             </div>
           ) : (
-            <p className="text-muted-foreground text-center py-8 text-sm sm:text-base">No reviews yet. Be the first to review this dish!</p>
+            <p className="text-muted-foreground text-center py-6 sm:py-8 text-xs xs:text-sm sm:text-base">No reviews yet. Be the first to review this dish!</p>
           )}
         </motion.div>
       </div>

@@ -94,8 +94,8 @@ const MenuItemReviewForm = ({ menuItemId, restaurantId, onReviewSubmitted }: Men
         onClick={() => handleStarClick(category, index)}
       >
         <Star
-          size={24}
-          className={`${
+          size={20}
+          className={`xs:w-5 xs:h-5 sm:w-6 sm:h-6 ${
             index <= (hoveredCategory === category && hoveredRating ? hoveredRating : currentRating)
               ? "fill-yellow-400 text-yellow-400"
               : "text-gray-300"
@@ -117,27 +117,27 @@ const MenuItemReviewForm = ({ menuItemId, restaurantId, onReviewSubmitted }: Men
   return (
     <motion.form 
       onSubmit={handleSubmit} 
-      className="space-y-4 sm:space-y-6 bg-card/80 backdrop-blur-sm rounded-2xl p-4 sm:p-6 lg:p-8 border border-border/50 shadow-elegant"
+      className="space-y-3 xs:space-y-4 sm:space-y-6 bg-card/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 xs:p-4 sm:p-6 lg:p-8 border border-border/50 shadow-elegant"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
     >
       {/* Overall Rating Display */}
-      <div className="text-center pb-4 sm:pb-6 border-b border-border/50">
-        <h3 className="text-base sm:text-lg font-semibold mb-2 text-foreground">Overall Rating</h3>
-        <div className="text-2xl sm:text-3xl font-bold text-primary">{overallRating.toFixed(1)}</div>
+      <div className="text-center pb-3 xs:pb-4 sm:pb-6 border-b border-border/50">
+        <h3 className="text-sm xs:text-base sm:text-lg font-semibold mb-1.5 sm:mb-2 text-foreground">Overall Rating</h3>
+        <div className="text-xl xs:text-2xl sm:text-3xl font-bold text-primary">{overallRating.toFixed(1)}</div>
         <p className="text-xs sm:text-sm text-muted-foreground">Based on your detailed ratings below</p>
       </div>
 
       {/* Individual Rating Categories */}
-      <div className="space-y-4 sm:space-y-6">
+      <div className="space-y-3 xs:space-y-4 sm:space-y-6">
         {ratingCategories.map((category) => (
           <div key={category.key}>
-            <label className="block text-xs sm:text-sm font-medium mb-2 sm:mb-3 text-foreground flex items-center gap-2">
-              <span className="text-base sm:text-lg">{category.icon}</span>
-              {category.label}
+            <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2 md:mb-3 text-foreground flex items-center gap-1.5 sm:gap-2">
+              <span className="text-sm xs:text-base sm:text-lg">{category.icon}</span>
+              <span className="text-xs xs:text-sm sm:text-base">{category.label}</span>
             </label>
-            <div className="flex items-center gap-1 sm:gap-2 justify-center sm:justify-start">
+            <div className="flex items-center gap-1 sm:gap-2 justify-start">
               {renderStars(category.key, ratings[category.key as keyof typeof ratings])}
               <span className="ml-1 sm:ml-2 text-xs sm:text-sm text-muted-foreground font-medium">
                 {ratings[category.key as keyof typeof ratings]}/5
@@ -148,21 +148,21 @@ const MenuItemReviewForm = ({ menuItemId, restaurantId, onReviewSubmitted }: Men
       </div>
       
       <div>
-        <label htmlFor="content" className="block text-sm font-medium mb-2 text-foreground">Your Experience</label>
+        <label htmlFor="content" className="block text-xs xs:text-sm font-medium mb-1.5 sm:mb-2 text-foreground">Your Experience</label>
         <Textarea
           id="content"
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder="Share your thoughts about this dish... How did it taste? Was the presentation appealing? Was the portion size appropriate?"
-          rows={4}
+          rows={3}
           required
-          className="resize-none focus:ring-2 focus:ring-primary/20 transition-all duration-200 bg-background/50"
+          className="resize-none focus:ring-2 focus:ring-primary/20 transition-all duration-200 bg-background/50 text-xs xs:text-sm sm:text-base"
         />
       </div>
       
       <Button 
         type="submit" 
-        className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl transition-all duration-300"
+        className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl transition-all duration-300 text-sm sm:text-base py-2.5 sm:py-3"
         disabled={isSubmitting}
       >
         {isSubmitting ? "Submitting..." : "Submit Dish Review"}
