@@ -12,6 +12,7 @@ import RestaurantDetail from "./pages/RestaurantDetail";
 import MenuItemDetail from "./pages/MenuItemDetail";
 import Search from "./pages/Search";
 import Profile from "./pages/Profile";
+import HowItWorks from "./pages/HowItWorks";
 
 const App = () => {
   // Create a new QueryClient instance inside the component
@@ -30,6 +31,7 @@ const App = () => {
               <Route path="/menu-item/:id" element={<MenuItemDetail />} />
               <Route path="/search" element={<Search />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/HowItWorks" element={<HowItWorks />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

@@ -46,7 +46,7 @@ const CTA = () => {
               Sign Up Free
             </Button>
           </Link>
-          <Link to="/how-it-works" className="w-full sm:w-auto">
+          <Link to="/HowItWorks" className="w-full sm:w-auto">
             <Button 
               variant="outline" 
               size="lg" 
