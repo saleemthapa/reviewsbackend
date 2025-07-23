@@ -117,29 +117,29 @@ const MenuItemReviewForm = ({ menuItemId, restaurantId, onReviewSubmitted }: Men
   return (
     <motion.form 
       onSubmit={handleSubmit} 
-      className="space-y-6 bg-card/80 backdrop-blur-sm rounded-2xl p-8 border border-border/50 shadow-elegant"
+      className="space-y-4 sm:space-y-6 bg-card/80 backdrop-blur-sm rounded-2xl p-4 sm:p-6 lg:p-8 border border-border/50 shadow-elegant"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
     >
       {/* Overall Rating Display */}
-      <div className="text-center pb-6 border-b border-border/50">
-        <h3 className="text-lg font-semibold mb-2 text-foreground">Overall Rating</h3>
-        <div className="text-3xl font-bold text-primary">{overallRating.toFixed(1)}</div>
-        <p className="text-sm text-muted-foreground">Based on your detailed ratings below</p>
+      <div className="text-center pb-4 sm:pb-6 border-b border-border/50">
+        <h3 className="text-base sm:text-lg font-semibold mb-2 text-foreground">Overall Rating</h3>
+        <div className="text-2xl sm:text-3xl font-bold text-primary">{overallRating.toFixed(1)}</div>
+        <p className="text-xs sm:text-sm text-muted-foreground">Based on your detailed ratings below</p>
       </div>
 
       {/* Individual Rating Categories */}
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         {ratingCategories.map((category) => (
           <div key={category.key}>
-            <label className="block text-sm font-medium mb-3 text-foreground flex items-center gap-2">
-              <span className="text-lg">{category.icon}</span>
+            <label className="block text-xs sm:text-sm font-medium mb-2 sm:mb-3 text-foreground flex items-center gap-2">
+              <span className="text-base sm:text-lg">{category.icon}</span>
               {category.label}
             </label>
-            <div className="flex items-center gap-2 justify-center md:justify-start">
+            <div className="flex items-center gap-1 sm:gap-2 justify-center sm:justify-start">
               {renderStars(category.key, ratings[category.key as keyof typeof ratings])}
-              <span className="ml-2 text-sm text-muted-foreground font-medium">
+              <span className="ml-1 sm:ml-2 text-xs sm:text-sm text-muted-foreground font-medium">
                 {ratings[category.key as keyof typeof ratings]}/5
               </span>
             </div>

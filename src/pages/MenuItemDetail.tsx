@@ -45,11 +45,11 @@ const MenuItemDetail = () => {
     <div className="min-h-screen bg-gradient-subtle">
       <Navbar />
       
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
         {/* Back Button */}
         <Link 
           to={`/restaurant/${menuItem.restaurantId}`}
-          className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-6"
+          className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-4 sm:mb-6"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to Restaurant
@@ -57,21 +57,21 @@ const MenuItemDetail = () => {
 
         {/* Menu Item Header */}
         <motion.div 
-          className="bg-card/80 backdrop-blur-sm rounded-2xl shadow-elegant overflow-hidden mb-8 border border-border/50"
+          className="bg-card/80 backdrop-blur-sm rounded-2xl shadow-elegant overflow-hidden mb-6 sm:mb-8 border border-border/50"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="md:flex">
-            <div className="md:w-1/2">
+          <div className="flex flex-col lg:flex-row">
+            <div className="w-full lg:w-1/2">
               <img 
                 src={menuItem.image} 
                 alt={menuItem.name}
-                className="w-full h-64 md:h-96 object-cover"
+                className="w-full h-48 sm:h-64 lg:h-96 object-cover"
               />
             </div>
             
-            <div className="md:w-1/2 p-8">
+            <div className="w-full lg:w-1/2 p-4 sm:p-6 lg:p-8">
               <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
                 <MapPin className="h-4 w-4" />
                 <Link 
@@ -82,18 +82,18 @@ const MenuItemDetail = () => {
                 </Link>
               </div>
               
-              <h1 className="text-3xl font-bold mb-4 text-foreground">{menuItem.name}</h1>
+              <h1 className="text-2xl sm:text-3xl font-bold mb-4 text-foreground">{menuItem.name}</h1>
               
-              <div className="flex items-center justify-between mb-6">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
                 <div className="flex items-center gap-3">
                   <RatingStars rating={averageRating} size="lg" />
                   <span className="text-lg font-medium text-foreground">{averageRating.toFixed(1)}</span>
                   <span className="text-muted-foreground">({reviewCount} reviews)</span>
                 </div>
-                <div className="text-3xl font-bold text-primary">${menuItem.price}</div>
+                <div className="text-2xl sm:text-3xl font-bold text-primary">${menuItem.price}</div>
               </div>
               
-              <p className="text-muted-foreground mb-6 leading-relaxed">{menuItem.description}</p>
+              <p className="text-muted-foreground mb-6 leading-relaxed text-sm sm:text-base">{menuItem.description}</p>
               
               <Button 
                 onClick={() => setShowReviewForm(!showReviewForm)}
@@ -108,7 +108,7 @@ const MenuItemDetail = () => {
         {/* Review Form */}
         {showReviewForm && (
           <motion.div 
-            className="mb-8"
+            className="mb-6 sm:mb-8"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
@@ -124,9 +124,9 @@ const MenuItemDetail = () => {
         )}
 
         {/* Ingredients & Allergens */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
           <motion.div 
-            className="bg-card/80 backdrop-blur-sm rounded-2xl p-6 border border-border/50"
+            className="bg-card/80 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-border/50"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
@@ -134,13 +134,13 @@ const MenuItemDetail = () => {
             <h3 className="text-lg font-semibold mb-4 text-foreground">Ingredients</h3>
             <ul className="space-y-2">
               {menuItem.ingredients.map((ingredient, index) => (
-                <li key={index} className="text-muted-foreground">{ingredient}</li>
+                <li key={index} className="text-muted-foreground text-sm sm:text-base">{ingredient}</li>
               ))}
             </ul>
           </motion.div>
           
           <motion.div 
-            className="bg-card/80 backdrop-blur-sm rounded-2xl p-6 border border-border/50"
+            className="bg-card/80 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-border/50"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
@@ -161,21 +161,21 @@ const MenuItemDetail = () => {
 
         {/* Reviews Section */}
         <motion.div 
-          className="bg-card/80 backdrop-blur-sm rounded-2xl p-6 border border-border/50"
+          className="bg-card/80 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-border/50"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          <h3 className="text-xl font-semibold mb-6 text-foreground">Customer Reviews</h3>
+          <h3 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6 text-foreground">Customer Reviews</h3>
           
           {reviews.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
               {reviews.map((review) => (
                 <ReviewCard key={review.id} review={review} />
               ))}
             </div>
           ) : (
-            <p className="text-muted-foreground text-center py-8">No reviews yet. Be the first to review this dish!</p>
+            <p className="text-muted-foreground text-center py-8 text-sm sm:text-base">No reviews yet. Be the first to review this dish!</p>
           )}
         </motion.div>
       </div>
