@@ -4,33 +4,70 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
-interface DetailedRatings {
+interface MenuItemDetailedRatings {
+  taste: number;
+  presentation: number;
+  portion: number;
+  value: number;
+}
+
+interface RestaurantDetailedRatings {
   food: number;
   ambience: number;
   service: number;
   pricing: number;
 }
 
+interface BaseReview {
+  id: number;
+  userName: string;
+  userImage?: string;
+  rating: number;
+  date: string;
+  content: string;
+  helpful?: number;
+}
+
+interface MenuItemReview extends BaseReview {
+  type: 'menuItem';
+  detailedRatings?: MenuItemDetailedRatings;
+}
+
+interface RestaurantReview extends BaseReview {
+  type: 'restaurant';
+  detailedRatings?: RestaurantDetailedRatings;
+}
+
 interface ReviewCardProps {
-  review: {
-    id: number;
-    userName: string;
-    userImage?: string;
-    rating: number;
-    detailedRatings?: DetailedRatings;
-    date: string;
-    content: string;
-    helpful?: number;
-  };
+  review: MenuItemReview | RestaurantReview | BaseReview;
 }
 
 const ReviewCard = ({ review }: ReviewCardProps) => {
-  const ratingCategories = [
+  const isMenuItemReview = 'type' in review && review.type === 'menuItem';
+  const isRestaurantReview = 'type' in review && review.type === 'restaurant';
+  
+  const menuItemCategories = [
+    { key: 'taste', label: 'Taste', icon: '🍽️' },
+    { key: 'presentation', label: 'Presentation', icon: '🎨' },
+    { key: 'portion', label: 'Portion', icon: '📏' },
+    { key: 'value', label: 'Value', icon: '💰' }
+  ];
+
+  const restaurantCategories = [
     { key: 'food', label: 'Food', icon: '🍽️' },
     { key: 'ambience', label: 'Ambience', icon: '🏮' },
     { key: 'service', label: 'Service', icon: '👥' },
     { key: 'pricing', label: 'Value', icon: '💰' }
   ];
+
+  const getCategories = () => {
+    if (isMenuItemReview) return menuItemCategories;
+    if (isRestaurantReview) return restaurantCategories;
+    return restaurantCategories; // Default fallback
+  };
+
+  const categories = getCategories();
+
   return (
     <motion.div 
       className="bg-card/80 backdrop-blur-sm rounded-2xl p-6 border border-border/50 hover:shadow-elegant transition-all duration-300"
@@ -73,8 +110,8 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
           {/* Detailed Ratings */}
           {review.detailedRatings && (
             <div className="grid grid-cols-2 gap-3 mb-4 p-3 bg-muted/30 rounded-xl">
-              {ratingCategories.map((category) => {
-                const rating = review.detailedRatings![category.key as keyof DetailedRatings];
+              {categories.map((category) => {
+                const rating = review.detailedRatings![category.key as keyof typeof review.detailedRatings];
                 return (
                   <div key={category.key} className="flex items-center gap-2">
                     <span className="text-sm">{category.icon}</span>

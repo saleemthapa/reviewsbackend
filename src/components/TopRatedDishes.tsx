@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { MapPin, ChevronRight } from "lucide-react";
 import RatingStars from "./RatingStars";
+import { useReviewStore } from "@/hooks/useReviewStore";
 
 // Mock data for featured restaurants
 const topDishes = [
@@ -13,8 +14,6 @@ const topDishes = [
     restaurant: "The Garden Grill",
     restaurantId: 1,
     price: 27.99,
-    rating: 4.9,
-    reviews: 123,
     description: "Homemade fettuccine with wild mushrooms, black truffle, and parmesan cream sauce",
     image: "pasta"
   },
@@ -24,8 +23,6 @@ const topDishes = [
     restaurant: "Sakura Sushi & Ramen",
     restaurantId: 2,
     price: 22.50,
-    rating: 4.8,
-    reviews: 95,
     description: "Cut rolls ice loaded with fresh salmon, tuna, yellowtail, and avocado",
     image: "sushi"
   },
@@ -35,8 +32,6 @@ const topDishes = [
     restaurant: "Bella Napoli",
     restaurantId: 3,
     price: 18.95,
-    rating: 4.7,
-    reviews: 143,
     description: "San Marzano tomatoes, fresh mozzarella, basil, and extra virgin olive oil",
     image: "pizza"
   },
@@ -46,14 +41,14 @@ const topDishes = [
     restaurant: "Spice House",
     restaurantId: 4,
     price: 19.95,
-    rating: 4.8,
-    reviews: 167,
     description: "Tender chicken in a rich, creamy tomato sauce with aromatic spices",
     image: "curry"
   },
 ];
 
 const TopRatedDishes = () => {
+  const { getMenuItemAverageRating, getMenuItemReviewCount } = useReviewStore();
+
   return (
     <section className="py-12 px-4 bg-gray-50">
       <div className="container mx-auto">
@@ -67,31 +62,36 @@ const TopRatedDishes = () => {
         </div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {topDishes.map((dish) => (
-            <Card key={dish.id} className="overflow-hidden border border-gray-200 hover:shadow-md transition-shadow">
-              <div className="bg-gray-200 h-48 relative overflow-hidden">
-                <img src={`/placeholder.svg`} alt={dish.name} className="w-full h-full object-cover" />
-                <div className="absolute top-2 right-2 bg-white px-2 py-1 rounded text-sm font-medium">
-                  ${dish.price}
+          {topDishes.map((dish) => {
+            const rating = getMenuItemAverageRating(dish.id);
+            const reviewCount = getMenuItemReviewCount(dish.id);
+            
+            return (
+              <Card key={dish.id} className="overflow-hidden border border-gray-200 hover:shadow-md transition-shadow">
+                <div className="bg-gray-200 h-48 relative overflow-hidden">
+                  <img src={`/placeholder.svg`} alt={dish.name} className="w-full h-full object-cover" />
+                  <div className="absolute top-2 right-2 bg-white px-2 py-1 rounded text-sm font-medium">
+                    ${dish.price}
+                  </div>
                 </div>
-              </div>
-              <CardContent className="p-4">
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="font-medium">{dish.name}</h3>
-                </div>
-                <Link to={`/menu-item/${dish.id}`} className="text-sm text-primary text-left hover:underline mb-2 block">
-                  {dish.restaurant}
-                </Link>
-                <div className="flex items-center mb-2">
-                  <RatingStars rating={dish.rating} size="sm" />
-                  <span className="ml-2 text-sm">
-                    {dish.rating} ({dish.reviews})
-                  </span>
-                </div>
-                <p className="text-sm text-gray-600 line-clamp-2">{dish.description}</p>
-              </CardContent>
-            </Card>
-          ))}
+                <CardContent className="p-4">
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="font-medium">{dish.name}</h3>
+                  </div>
+                  <Link to={`/menu-item/${dish.id}`} className="text-sm text-primary text-left hover:underline mb-2 block">
+                    {dish.restaurant}
+                  </Link>
+                  <div className="flex items-center mb-2">
+                    <RatingStars rating={rating} size="sm" />
+                    <span className="ml-2 text-sm">
+                      {rating > 0 ? `${rating.toFixed(1)} (${reviewCount})` : 'No reviews yet'}
+                    </span>
+                  </div>
+                  <p className="text-sm text-gray-600 line-clamp-2">{dish.description}</p>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       </div>
     </section>

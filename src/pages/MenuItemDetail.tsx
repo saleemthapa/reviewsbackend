@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -5,9 +6,10 @@ import { ArrowLeft, Star, MapPin } from "lucide-react";
 import RatingStars from "@/components/RatingStars";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import ReviewForm from "@/components/ReviewForm";
+import MenuItemReviewForm from "@/components/MenuItemReviewForm";
 import ReviewCard from "@/components/ReviewCard";
 import { motion } from "framer-motion";
+import { useReviewStore } from "@/hooks/useReviewStore";
 
 // Mock menu item data
 const menuItems = [
@@ -17,37 +19,10 @@ const menuItems = [
     restaurant: "The Garden Grill",
     restaurantId: 1,
     price: 27.99,
-    rating: 4.9,
-    totalReviews: 123,
     description: "Homemade fettuccine with wild mushrooms, black truffle shavings, and parmesan cream sauce. Served with garlic bread and a side of mixed greens.",
     ingredients: ["Fettuccine pasta", "Wild mushrooms", "Black truffle", "Parmesan cheese", "Heavy cream", "Garlic", "Fresh herbs"],
     allergens: ["Gluten", "Dairy"],
-    image: "/placeholder.svg",
-    reviews: [
-      {
-        id: 1,
-        userName: "Sarah Johnson",
-        userImage: "/placeholder.svg",
-        rating: 5,
-        date: "September 15, 2023",
-        content: "Absolutely divine! The truffle aroma hits you immediately and the pasta is cooked to perfection. Worth every penny!"
-      },
-      {
-        id: 2,
-        userName: "Michael Chen",
-        rating: 4,
-        date: "September 10, 2023",
-        content: "Really enjoyed this dish. The mushrooms were perfectly seasoned and the sauce was rich without being too heavy."
-      },
-      {
-        id: 3,
-        userName: "Emily Davis",
-        userImage: "/placeholder.svg",
-        rating: 5,
-        date: "September 5, 2023",
-        content: "Best pasta dish I've had in the city! The truffle flavor is incredible and the portion size is generous."
-      }
-    ]
+    image: "/placeholder.svg"
   }
 ];
 
@@ -55,8 +30,12 @@ const MenuItemDetail = () => {
   const { id } = useParams<{ id: string }>();
   const itemId = parseInt(id || "1");
   const [showReviewForm, setShowReviewForm] = useState(false);
+  const { getMenuItemReviews, getMenuItemAverageRating, getMenuItemReviewCount } = useReviewStore();
   
   const menuItem = menuItems.find(item => item.id === itemId) || menuItems[0];
+  const reviews = getMenuItemReviews(itemId);
+  const averageRating = getMenuItemAverageRating(itemId);
+  const reviewCount = getMenuItemReviewCount(itemId);
   
   const handleReviewSubmitted = () => {
     setShowReviewForm(false);
@@ -107,9 +86,9 @@ const MenuItemDetail = () => {
               
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">
-                  <RatingStars rating={menuItem.rating} size="lg" />
-                  <span className="text-lg font-medium text-foreground">{menuItem.rating}</span>
-                  <span className="text-muted-foreground">({menuItem.totalReviews} reviews)</span>
+                  <RatingStars rating={averageRating} size="lg" />
+                  <span className="text-lg font-medium text-foreground">{averageRating.toFixed(1)}</span>
+                  <span className="text-muted-foreground">({reviewCount} reviews)</span>
                 </div>
                 <div className="text-3xl font-bold text-primary">${menuItem.price}</div>
               </div>
@@ -136,7 +115,11 @@ const MenuItemDetail = () => {
             transition={{ duration: 0.3 }}
           >
             <h3 className="text-xl font-semibold mb-4 text-foreground">Write Your Review</h3>
-            <ReviewForm restaurantId={menuItem.restaurantId} onReviewSubmitted={handleReviewSubmitted} />
+            <MenuItemReviewForm 
+              menuItemId={itemId} 
+              restaurantId={menuItem.restaurantId} 
+              onReviewSubmitted={handleReviewSubmitted} 
+            />
           </motion.div>
         )}
 
@@ -185,11 +168,15 @@ const MenuItemDetail = () => {
         >
           <h3 className="text-xl font-semibold mb-6 text-foreground">Customer Reviews</h3>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {menuItem.reviews.map((review) => (
-              <ReviewCard key={review.id} review={review} />
-            ))}
-          </div>
+          {reviews.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {reviews.map((review) => (
+                <ReviewCard key={review.id} review={review} />
+              ))}
+            </div>
+          ) : (
+            <p className="text-muted-foreground text-center py-8">No reviews yet. Be the first to review this dish!</p>
+          )}
         </motion.div>
       </div>
       
