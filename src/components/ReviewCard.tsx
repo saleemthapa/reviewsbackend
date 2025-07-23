@@ -109,7 +109,7 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
 
           {/* Detailed Ratings */}
           {review.detailedRatings && (
-            <div className="grid grid-cols-2 gap-3 mb-4 p-3 bg-muted/30 rounded-xl">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4 p-2 bg-muted/30 rounded-xl mx-auto justify-items-start w-full min-w-0">
               {categories.map((category) => {
                 const rating = review.detailedRatings?.[category.key as keyof typeof review.detailedRatings] || 0;
                 return (
@@ -136,7 +136,7 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
             </div>
           )}
           
-          <p className="text-muted-foreground leading-relaxed mb-4">{review.content}</p>
+          <p className="text-muted-foreground leading-relaxed mb-4 text-left">{review.content}</p>
           
           {review.helpful && (
             <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">

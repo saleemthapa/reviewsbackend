@@ -2,6 +2,7 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
+// The Card component is now a bit wider on small mobile devices and has margin on both sides.
 const Card = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -9,7 +10,8 @@ const Card = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "rounded-lg border bg-card text-card-foreground shadow-sm",
+      // Add mx-2 for margin on both sides, w-full for width, and max-w-xs for a bit wider card on mobile
+      "rounded-lg border bg-card text-card-foreground shadow-sm w-full max-w-xs mx-2 sm:mx-0 sm:max-w-full",
       className
     )}
     {...props}

@@ -53,14 +53,14 @@ const TopRatedDishes = () => {
     <section className="py-12 px-4 bg-gray-50">
       <div className="container mx-auto">
         <div className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-bold flex items-center gap-2">
+          <h2 className="text-xl font-bold flex items-center gap-2">
             📈 Top Rated Dishes
           </h2>
-          <Link to="/dishes" className="text-blue-500 flex items-center text-sm">
-            View all <ChevronRight className="h-4 w-4 ml-1" />
+          <Link to="/dishes" className="text-blue-500 flex items-center text-xs sm:text-sm">
+            View all <ChevronRight className="h-3 w-3 ml-1 sm:h-4 sm:w-4" />
           </Link>
         </div>
-        
+            <ChevronRight className="h-3 w-3 ml-1 sm:h-4 sm:w-4" />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {topDishes.map((dish) => {
             const rating = getMenuItemAverageRating(dish.id);

@@ -58,9 +58,9 @@ const FeaturedRestaurants = () => {
     <section className="py-12 px-4 bg-white">
       <div className="container mx-auto">
         <div className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-bold">Featured Restaurants</h2>
+          <h2 className="text-xl font-bold">Featured Restaurants</h2>
           <Link to="/restaurants" className="text-blue-500 flex items-center text-sm">
-            View all <ChevronRight className="h-4 w-4 ml-1" />
+          View all <ChevronRight className="h-3 w-3 ml-1 sm:h-4 sm:w-4" />
           </Link>
         </div>
         
