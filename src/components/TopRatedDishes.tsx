@@ -76,18 +76,20 @@ const TopRatedDishes = () => {
                 </div>
                 <CardContent className="p-4">
                   <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-medium">{dish.name}</h3>
+                    <Link to={`/menu-item/${dish.id}`} className="font-medium hover:underline">
+                      {dish.name}
+                    </Link>
                   </div>
-                  <Link to={`/menu-item/${dish.id}`} className="text-sm text-primary text-left hover:underline mb-2 block">
+                  <div className="text-sm text-primary text-left hover:underline mb-2 block">
                     {dish.restaurant}
-                  </Link>
+                  </div>
                   <div className="flex items-center mb-2">
                     <RatingStars rating={rating} size="sm" />
                     <span className="ml-2 text-sm">
                       {rating > 0 ? `${rating.toFixed(1)} (${reviewCount})` : 'No reviews yet'}
                     </span>
                   </div>
-                  <p className="text-sm text-gray-600 line-clamp-2">{dish.description}</p>
+                  <p className="text-sm text-left text-gray-600 line-clamp-2">{dish.description}</p>
                 </CardContent>
               </Card>
             );
