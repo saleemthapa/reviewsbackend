@@ -47,7 +47,8 @@ const restaurants = [
         },
         date: "August 12, 2023",
         content: "Absolutely amazing experience! The truffle pasta was divine and the ambiance was perfect for our anniversary dinner. Service was attentive without being intrusive. Will definitely be coming back!",
-        helpful: 12
+        helpful: 12,
+        type: 'restaurant' as const
       },
       {
         id: 2,
@@ -62,7 +63,8 @@ const restaurants = [
         },
         date: "July 28, 2023",
         content: "Great food and atmosphere. The seasonal salad was fresh and flavorful. Only giving 4 stars because we had to wait a bit longer than expected for our table despite having a reservation.",
-        helpful: 8
+        helpful: 8,
+        type: 'restaurant' as const
       },
       {
         id: 3,
@@ -76,7 +78,8 @@ const restaurants = [
         },
         date: "June 15, 2023",
         content: "The roasted duck is to die for! Perfectly cooked and the cherry glaze complemented it so well. The service was impeccable and the wine selection is extensive. Highly recommend!",
-        helpful: 15
+        helpful: 15,
+        type: 'restaurant' as const
       }
     ]
   },
@@ -117,7 +120,8 @@ const restaurants = [
         },
         date: "September 5, 2023",
         content: "Best ramen in town! The broth is so rich and flavorful. The noodles had the perfect texture and the char siu was melt-in-your-mouth tender.",
-        helpful: 9
+        helpful: 9,
+        type: 'restaurant' as const
       },
       {
         id: 2,
@@ -131,7 +135,8 @@ const restaurants = [
         },
         date: "August 19, 2023",
         content: "Really enjoyed the Dragon Roll and the Gyoza. Everything tasted fresh and authentic. Would definitely recommend!",
-        helpful: 6
+        helpful: 6,
+        type: 'restaurant' as const
       },
       {
         id: 3,
@@ -146,7 +151,8 @@ const restaurants = [
         },
         date: "July 12, 2023",
         content: "Excellent service and amazing food. The spicy tuna roll is a must-try. Will be coming back soon!",
-        helpful: 11
+        helpful: 11,
+        type: 'restaurant' as const
       }
     ]
   },

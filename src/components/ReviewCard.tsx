@@ -39,7 +39,7 @@ interface RestaurantReview extends BaseReview {
 }
 
 interface ReviewCardProps {
-  review: MenuItemReview | RestaurantReview | BaseReview;
+  review: MenuItemReview | RestaurantReview;
 }
 
 const ReviewCard = ({ review }: ReviewCardProps) => {
@@ -111,7 +111,7 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
           {review.detailedRatings && (
             <div className="grid grid-cols-2 gap-3 mb-4 p-3 bg-muted/30 rounded-xl">
               {categories.map((category) => {
-                const rating = review.detailedRatings![category.key as keyof typeof review.detailedRatings];
+                const rating = review.detailedRatings?.[category.key as keyof typeof review.detailedRatings] || 0;
                 return (
                   <div key={category.key} className="flex items-center gap-2">
                     <span className="text-sm">{category.icon}</span>

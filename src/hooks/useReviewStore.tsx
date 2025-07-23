@@ -42,7 +42,7 @@ type Review = MenuItemReview | RestaurantReview;
 
 interface ReviewStore {
   reviews: Review[];
-  addReview: (review: Omit<Review, 'id'>) => void;
+  addReview: (review: Omit<MenuItemReview, 'id'> | Omit<RestaurantReview, 'id'>) => void;
   getMenuItemReviews: (menuItemId: number) => MenuItemReview[];
   getRestaurantReviews: (restaurantId: number) => RestaurantReview[];
   getMenuItemAverageRating: (menuItemId: number) => number;
@@ -111,11 +111,11 @@ const initialReviews: Review[] = [
 export const ReviewProvider = ({ children }: { children: ReactNode }) => {
   const [reviews, setReviews] = useState<Review[]>(initialReviews);
 
-  const addReview = (review: Omit<Review, 'id'>) => {
+  const addReview = (review: Omit<MenuItemReview, 'id'> | Omit<RestaurantReview, 'id'>) => {
     const newReview = {
       ...review,
       id: Date.now(), // Simple ID generation
-    };
+    } as Review;
     setReviews(prev => [...prev, newReview]);
   };
 
