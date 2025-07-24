@@ -54,7 +54,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const register = async (userData: RegisterData): Promise<boolean> => {
     try {
-      const response = await fetch('/bandobasta/api/v1/user/authenticate/register', {
+      const response = await fetch('https://bandobasta-latest-5u7o.onrender.com/bandobasta/api/v1/user/authenticate/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -74,7 +74,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const confirmOTP = async (token: string): Promise<boolean> => {
     try {
-      const response = await fetch(`/bandobasta/api/v1/user/authenticate/register/confirm?token=${token}`, {
+      const response = await fetch(`https://bandobasta-latest-5u7o.onrender.com/bandobasta/api/v1/user/authenticate/register/confirm?token=${token}`, {
         method: 'GET',
       });
 
@@ -87,7 +87,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const login = async (username: string, password: string): Promise<boolean> => {
     try {
-      const response = await fetch('/bandobasta/api/v1/user/authenticate/login', {
+      const response = await fetch('https://bandobasta-latest-5u7o.onrender.com/bandobasta/api/v1/user/authenticate/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
