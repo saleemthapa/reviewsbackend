@@ -2,11 +2,13 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Search, Menu, X, User } from "lucide-react";
+import { Search, Menu, X, User, LogOut } from "lucide-react";
 import { motion } from "framer-motion";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, logout } = useAuth();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -42,11 +44,32 @@ const Navbar = () => {
               <Search className="h-5 w-5" />
             </Button>
           </Link>
-          <Link to="/profile">
-            <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-              <User className="h-5 w-5" />
-            </Button>
-          </Link>
+          
+          {user ? (
+            <>
+              <Link to="/profile">
+                <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+                  <User className="h-5 w-5" />
+                </Button>
+              </Link>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="text-muted-foreground hover:text-foreground hidden md:flex"
+                onClick={logout}
+              >
+                <LogOut className="h-4 w-4 mr-2" />
+                Logout
+              </Button>
+            </>
+          ) : (
+            <Link to="/auth">
+              <Button variant="default" size="sm">
+                Sign In
+              </Button>
+            </Link>
+          )}
+          
           <button 
             className="md:hidden text-muted-foreground hover:text-foreground" 
             onClick={toggleMenu}
@@ -69,7 +92,22 @@ const Navbar = () => {
           <nav className="flex flex-col space-y-4">
             <Link to="/" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Home</Link>
             <Link to="/search" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Search</Link>
-            <Link to="/profile" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Profile</Link>
+            {user ? (
+              <>
+                <Link to="/profile" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Profile</Link>
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="text-sm font-medium text-muted-foreground hover:text-foreground justify-start p-0"
+                  onClick={logout}
+                >
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <Link to="/auth" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Sign In</Link>
+            )}
           </nav>
         </motion.div>
       )}
