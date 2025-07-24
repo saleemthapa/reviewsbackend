@@ -1,5 +1,21 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
+/**
+ * NOTE: CORS (Cross-Origin Resource Sharing) issues are not caused by this frontend code,
+ * but by the server not sending the appropriate CORS headers in its response.
+ * 
+ * However, you can check for CORS errors in the browser console (look for errors like:
+ * "Access to fetch at '...' from origin '...' has been blocked by CORS policy").
+ * 
+ * In this code, all fetch requests are made to 'https://bandobasta-latest-5u7o.onrender.com'.
+ * If that server does not allow requests from your frontend's origin, you will get CORS errors.
+ * 
+ * You CANNOT fix CORS by changing fetch options in the frontend (except for using only simple requests).
+ * The server must send the correct 'Access-Control-Allow-Origin' header.
+ * 
+ * For debugging, you can add a catch block to log fetch errors, which may include CORS errors.
+ */
+
 interface User {
   username: string;
   roles: string[];
@@ -63,11 +79,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           ...userData,
           role: 'ROLE_USER',
         }),
+        // mode: 'cors' // This is the default for cross-origin requests in browsers
       });
 
       return response.ok;
-    } catch (error) {
+    } catch (error: any) {
+      // This will catch CORS errors as well as network errors
       console.error('Registration failed:', error);
+      if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
+        console.error('Possible CORS/network error during registration.');
+      }
       return false;
     }
   };
@@ -76,11 +97,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       const response = await fetch(`https://bandobasta-latest-5u7o.onrender.com/bandobasta/api/v1/user/authenticate/register/confirm?token=${token}`, {
         method: 'GET',
+        // mode: 'cors'
       });
 
       return response.ok;
-    } catch (error) {
+    } catch (error: any) {
       console.error('OTP confirmation failed:', error);
+      if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
+        console.error('Possible CORS/network error during OTP confirmation.');
+      }
       return false;
     }
   };
@@ -93,6 +118,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ username, password }),
+        // mode: 'cors'
       });
 
       if (response.ok) {
@@ -109,8 +135,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return true;
       }
       return false;
-    } catch (error) {
+    } catch (error: any) {
       console.error('Login failed:', error);
+      if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
+        console.error('Possible CORS/network error during login.');
+      }
       return false;
     }
   };
