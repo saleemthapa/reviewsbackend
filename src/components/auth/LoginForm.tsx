@@ -50,7 +50,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto">
+    <Card className="lg:w-1/3 md:w-1/2 sm:w-full max-w-md mx-auto">
       <CardHeader>
         <CardTitle>Sign In</CardTitle>
         <CardDescription>
