@@ -12,8 +12,6 @@ export default defineConfig(({ mode }) => ({
     fs: {
       strict: false,
     },
-    // 👇 Fallback to index.html for SPA routing
-    historyApiFallback: true,
   },
   plugins: [
     react(),
