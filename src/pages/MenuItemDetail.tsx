@@ -133,10 +133,20 @@ const MenuItemDetail = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <h3 className="text-base xs:text-lg font-semibold mb-3 sm:mb-4 text-foreground">Ingredients</h3>
-            <ul className="space-y-1.5 sm:space-y-2">
+            <h3 className="text-lg xs:text-lg font-semibold mb-3 sm:mb-4 text-foreground">Ingredients</h3>
+            <ul className="grid grid-cols-2 gap-x-4 gap-y-2 sm:gap-x-6 sm:gap-y-3">
               {menuItem.ingredients.map((ingredient, index) => (
-                <li key={index} className="text-muted-foreground text-xs xs:text-sm sm:text-base">{ingredient}</li>
+                <li 
+                  key={index} 
+                  className="flex items-center gap-2 text-muted-foreground text-xs xs:text-sm sm:text-base"
+                >
+                  <span className="inline-flex items-center justify-center rounded-full bg-green-100 text-green-600 p-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </span>
+                  {ingredient}
+                </li>
               ))}
             </ul>
           </motion.div>
@@ -147,7 +157,7 @@ const MenuItemDetail = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            <h3 className="text-base xs:text-lg font-semibold mb-3 sm:mb-4 text-foreground">Allergens</h3>
+            <h3 className="text-lg xs:text-lg font-semibold mb-3 sm:mb-4 text-foreground">Allergens</h3>
             <div className="flex flex-wrap gap-1.5 sm:gap-2">
               {menuItem.allergens.map((allergen, index) => (
                 <span 

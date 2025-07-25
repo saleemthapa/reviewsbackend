@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { MapPin, Phone, Globe, Star, Clock, MessageSquare } from "lucide-react";
+import { MapPin, Phone, Globe, Star, Clock, MessageSquare, ChevronRight } from "lucide-react";
 import RatingStars from "@/components/RatingStars";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ReviewForm from "@/components/ReviewForm";
 import ReviewCard from "@/components/ReviewCard";
-
+import { Link } from "react-router-dom";
 // Mock restaurant data - in a real app this would come from an API
 const restaurants = [
   {
@@ -21,9 +21,9 @@ const restaurants = [
     averageRating: 4.7,
     totalReviews: 182,
     images: [
-      "/placeholder.svg",
-      "/placeholder.svg",
-      "/placeholder.svg"
+      "/restaurant1.jpg",
+      "/restaurant1.jpg",
+      "/restaurant1.jpg"
     ],
     description: "Farm-to-table restaurant featuring locally-sourced ingredients and seasonal menu items in a bright, airy space with garden views.",
     topDishes: ["Truffle Pasta", "Roasted Duck", "Hummus"],
@@ -220,7 +220,7 @@ const RestaurantDetail = () => {
         <div className="bg-white rounded-lg shadow-md overflow-hidden mb-8">
           <div className="h-48 sm:h-64 md:h-80 bg-gray-200 relative">
             <img 
-              src={restaurant.images?.[activeImageIndex] || "/placeholder.svg"} 
+              src={restaurant.images?.[activeImageIndex] || "/restaurant1.jpg"} 
               alt={restaurant.name} 
               className="w-full h-full object-cover"
             />
@@ -312,13 +312,21 @@ const RestaurantDetail = () => {
                     <span className="font-medium text-gray-900">${item.price}</span>
                   </div>
                   
-                  <p className="text-sm text-gray-600 mb-2 line-clamp-2">{item.description}</p>
+                  <p className="text-sm text-gray-600 text-left mb-2 line-clamp-2">{item.description}</p>
                   
-                  <div className="flex items-center">
+                  <div className="flex items-center mb-2">
                     <RatingStars rating={item.rating} size="sm" />
                     <span className="ml-2 text-sm text-gray-500">
                       {item.rating} ({item.reviews} reviews)
                     </span>
+                  </div>
+                  <div>
+                    <Link
+                      to={`/menu-item/${item.id}`}
+                      className="inline-block text-blue-500 hover:underline text-sm font-medium"
+                    >
+                      See details
+                    </Link>
                   </div>
                 </div>
               </div>

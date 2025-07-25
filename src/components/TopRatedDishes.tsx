@@ -60,7 +60,6 @@ const TopRatedDishes = () => {
             View all <ChevronRight className="h-3 w-3 ml-1 sm:h-4 sm:w-4" />
           </Link>
         </div>
-            <ChevronRight className="h-3 w-3 ml-1 sm:h-4 sm:w-4" />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {topDishes.map((dish) => {
             const rating = getMenuItemAverageRating(dish.id);
