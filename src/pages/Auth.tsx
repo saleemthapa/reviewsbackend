@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { LoginForm } from '@/components/auth/LoginForm';
 import { RegisterForm } from '@/components/auth/RegisterForm';
 import { OTPVerification } from '@/components/auth/OTPVerification';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 type AuthView = 'login' | 'register' | 'otp';
 
@@ -9,6 +12,7 @@ const AUTH_VIEW_KEY = 'auth.currentView';
 const AUTH_EMAIL_KEY = 'auth.registrationEmail';
 
 const Auth: React.FC = () => {
+  const navigate = useNavigate();
   const [currentView, setCurrentView] = useState<AuthView>(() => {
     if (typeof window !== 'undefined') {
       const stored = localStorage.getItem(AUTH_VIEW_KEY);
@@ -47,6 +51,15 @@ const Auth: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/10 via-background to-secondary/10 flex items-center justify-center p-4">
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={() => navigate('/')}
+        className="absolute top-4 left-4"
+      >
+        <ArrowLeft className="h-4 w-4 mr-2" />
+        Back to Home
+      </Button>
       {currentView === 'login' && (
         <LoginForm 
           onSwitchToRegister={() => setCurrentView('register')}
