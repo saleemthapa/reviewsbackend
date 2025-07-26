@@ -1,26 +1,26 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { MapPin, Phone, Globe, Clock, ChevronRight } from "lucide-react";
+import { MapPin, Phone, Globe, Clock } from "lucide-react";
 import RatingStars from "@/components/RatingStars";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 const TestMenu = () => {
   const { id } = useParams<{ id: string }>();
-  const [restaurant, setRestaurant] = useState<any>(null);
   const [menuItems, setMenuItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [restaurant, setRestaurant] = useState<any>(null);
 
   useEffect(() => {
     setLoading(true);
     Promise.all([
-      fetch("https://reviewsbackend.onrender.com/api/menu-items").then(res => res.json())
+      fetch(`https://reviewsbackend.onrender.com/api/restaurants/${id}`).then(res => res.json()),
+      fetch(`https://reviewsbackend.onrender.com/api/menu-items/restaurant/${id}`).then(res => res.json())
     ])
       .then(([restaurantData, menuItemsData]) => {
         setRestaurant(restaurantData);
-        setMenuItems(menuItemsData.filter((item: any) => item.restaurant_id === id));
+        setMenuItems(menuItemsData);
         setLoading(false);
       })
       .catch(() => {
@@ -30,7 +30,7 @@ const TestMenu = () => {
   }, [id]);
 
   if (loading) return <div className="p-8 text-center">Loading...</div>;
-  if (error || !restaurant) return <div className="p-8 text-center text-red-500">{error || "Restaurant not found"}</div>;
+  if (error) return <div className="p-8 text-center text-red-500">{error}</div>;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -41,42 +41,42 @@ const TestMenu = () => {
           <div className="h-48 sm:h-64 md:h-80 bg-gray-200 relative">
             <img 
               src={"/placeholder.svg"} 
-              alt={restaurant.name} 
+              alt={restaurant?.name || "Restaurant"} 
               className="w-full h-full object-cover"
             />
             <div className="absolute bottom-4 left-4 bg-white px-3 py-1 rounded-full text-sm font-medium">
-              {restaurant.cuisine_types?.join(", ")}
+              {restaurant?.cuisine_types?.join(", ")}
             </div>
           </div>
           <div className="p-6">
             <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
               <div>
-                <h1 className="text-2xl md:text-3xl font-bold mb-2">{restaurant.name}</h1>
+                <h1 className="text-2xl md:text-3xl font-bold mb-2">{restaurant?.name || "Restaurant"}</h1>
                 <div className="flex items-center mb-4">
-                  <RatingStars rating={restaurant.average_rating} />
+                  <RatingStars rating={restaurant?.average_rating || 0} />
                   <span className="ml-2 text-gray-700">
-                    {restaurant.average_rating} ({restaurant.total_reviews} reviews)
+                    {restaurant?.average_rating ?? "-"} ({restaurant?.total_reviews ?? 0} reviews)
                   </span>
                 </div>
-                <p className="text-gray-600 mb-6 max-w-3xl">{restaurant.address}</p>
+                <p className="text-gray-600 mb-6 max-w-3xl">{restaurant?.address || "No address available"}</p>
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 pt-6 border-t border-gray-100">
               <div className="flex items-center">
                 <MapPin className="h-5 w-5 text-gray-400 mr-2" />
-                <span className="text-sm">{restaurant.location?.city}</span>
+                <span className="text-sm">{restaurant?.location?.city || "-"}</span>
               </div>
               <div className="flex items-center">
                 <Phone className="h-5 w-5 text-gray-400 mr-2" />
-                <span className="text-sm">{restaurant.contact_phone}</span>
+                <span className="text-sm">{restaurant?.contact_phone || "-"}</span>
               </div>
               <div className="flex items-center">
                 <Globe className="h-5 w-5 text-gray-400 mr-2" />
-                <span className="text-sm">{restaurant.website}</span>
+                <span className="text-sm">{restaurant?.website || "-"}</span>
               </div>
               <div className="flex items-center">
                 <Clock className="h-5 w-5 text-gray-400 mr-2" />
-                <span className="text-sm">{restaurant.created_at?.slice(0, 10)}</span>
+                <span className="text-sm">{restaurant?.created_at?.slice(0, 10) || "-"}</span>
               </div>
             </div>
           </div>
