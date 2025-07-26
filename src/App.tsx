@@ -15,6 +15,8 @@ import Search from "./pages/Search";
 import Profile from "./pages/Profile";
 import HowItWorks from "./pages/HowItWorks";
 import Auth from "./pages/Auth";
+import TestApi from "./pages/TestApi";
+import TestMenu from "./pages/TestMenu";
 
 const App = () => {
   // Create a new QueryClient instance inside the component
@@ -36,6 +38,8 @@ const App = () => {
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/HowItWorks" element={<HowItWorks />} />
                 <Route path="/auth" element={<Auth />} />
+                <Route path="/test-api" element={<TestApi />} />
+                <Route path="/test-menu/:id" element={<TestMenu />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>

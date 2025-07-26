@@ -69,7 +69,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
   };
 
   return (
-    <Card className="lg:w-1/4 md:w-1/2 sm:w-full max-w-md mx-auto">
+    <Card className="lg:w-1/2 md:w-1/2 sm:w-full max-w-md mx-auto">
       <CardHeader>
         <CardTitle>Sign Up</CardTitle>
         <CardDescription>
