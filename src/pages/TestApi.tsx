@@ -57,7 +57,11 @@ const TestApi = () => {
                       <span className="absolute top-2 left-2 bg-blue-500 text-white px-2 py-1 text-xs rounded-md">
                         {restaurant.cuisine_types?.join(", ")}
                       </span>
-                      <img src={`/placeholder.svg`} alt={restaurant.name} className="w-full h-full object-cover" />
+                      <img
+                        src={restaurant.restaurant_image || "/placeholder.svg"}
+                        alt={restaurant.name}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                     <div className="absolute bottom-2 left-2 flex items-center">
                       <div className="bg-white px-2 py-1 rounded-md shadow flex items-center text-sm">

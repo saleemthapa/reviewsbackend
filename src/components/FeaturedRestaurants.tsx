@@ -14,7 +14,7 @@ const featuredRestaurants = [
     location: "San Francisco, CA",
     averageRating: 4.7,
     totalReviews: 182,
-    image: "garden-table",
+    image: "https://images.pexels.com/photos/3475617/pexels-photo-3475617.jpeg",
     topDishes: ["Truffle Pasta", "Roasted Duck", "Hummus"],
     description: "Farm-to-table restaurant featuring locally-sourced ingredients and seasonal menu items in a bright, airy space with garden views."
   },
@@ -25,7 +25,7 @@ const featuredRestaurants = [
     location: "Los Angeles, CA",
     averageRating: 4.6,
     totalReviews: 156,
-    image: "sushi-master",
+    image: "https://images.pexels.com/photos/3421920/pexels-photo-3421920.jpeg",
     topDishes: ["Spicy Tuna Roll", "Tonkotsu Ramen", "Gyoza"],
     description: "Authentic Japanese cuisine specializing in meticulously prepared sushi and steaming bowls of traditional ramen in a modern setting."
   },
@@ -36,7 +36,7 @@ const featuredRestaurants = [
     location: "New York, NY",
     averageRating: 4.5,
     totalReviews: 137,
-    image: "pasta-paradise",
+    image: "https://images.pexels.com/photos/1566837/pexels-photo-1566837.jpeg",
     topDishes: ["Margherita Pizza", "Lasagne", "Tiramisu"],
     description: "Family-owned Italian trattoria serving wood-fired pizzas, homemade pastas, and traditional desserts with recipes passed down for generations."
   },
@@ -47,7 +47,7 @@ const featuredRestaurants = [
     location: "Chicago, IL",
     averageRating: 4.8,
     totalReviews: 117,
-    image: "pasta-paradise",
+    image: "https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg",
     topDishes: ["Butter Chicken", "Garlic Naan", "Biryani"],
     description: "Vibrant restaurant offering a culinary journey through regional Indian cuisines with fragrant curries, tandoori specialties, and fresh-baked breads."
   }
@@ -73,7 +73,7 @@ const FeaturedRestaurants = () => {
                     <span className="absolute top-2 left-2 bg-blue-500 text-white px-2 py-1 text-xs rounded-md">
                       {restaurant.cuisine}
                     </span>
-                    <img src={`/placeholder.svg`} alt={restaurant.name} className="w-full h-full object-cover" />
+                    <img src={restaurant.image || "/placeholder.svg"} alt={restaurant.name} className="w-full h-full object-cover" />
                   </div>
                   <div className="absolute bottom-2 left-2 flex items-center">
                     <div className="bg-white px-2 py-1 rounded-md shadow flex items-center text-sm">

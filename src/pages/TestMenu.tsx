@@ -40,7 +40,7 @@ const TestMenu = () => {
         <div className="bg-white rounded-lg shadow-md overflow-hidden mb-8">
           <div className="h-48 sm:h-64 md:h-80 bg-gray-200 relative">
             <img 
-              src={"/placeholder.svg"} 
+              src={restaurant.restaurant_image || "/placeholder.svg"}
               alt={restaurant?.name || "Restaurant"} 
               className="w-full h-full object-cover"
             />
