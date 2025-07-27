@@ -96,7 +96,7 @@ const TestMenu = () => {
             {menuItems.length > 0 ? menuItems.map((item) => (
               <div key={item.id} className="flex flex-col sm:flex-row gap-4 p-4 border border-gray-100 rounded-lg hover:bg-gray-50">
                 <div className="w-full sm:w-24 h-24 bg-gray-200 rounded-md overflow-hidden shrink-0">
-                  <img src={item.image_url || "/placeholder.svg"} alt={item.name} className="w-full h-full object-cover" />
+                  <img src={item.image_url || "/placeholder1.svg"} alt={item.name} className="w-full h-full object-cover" />
                 </div>
                 <div className="flex-1">
                   <div className="flex justify-between items-start mb-1">
@@ -111,7 +111,7 @@ const TestMenu = () => {
                   </div>
                   <div>
                     <Link
-                      to={`/menu-item/${item.id}`}
+                      to={`/test-menu-item/${item.id}`}
                       className="inline-block text-blue-500 hover:underline text-sm font-medium"
                     >
                       See details

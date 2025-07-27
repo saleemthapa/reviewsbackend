@@ -17,7 +17,7 @@ import HowItWorks from "./pages/HowItWorks";
 import Auth from "./pages/Auth";
 import TestApi from "./pages/TestApi";
 import TestMenu from "./pages/TestMenu";
-
+import TestMenuItem from "./pages/TestMenuItem";
 const App = () => {
   // Create a new QueryClient instance inside the component
   const [queryClient] = useState(() => new QueryClient());
@@ -40,6 +40,7 @@ const App = () => {
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/test-api" element={<TestApi />} />
                 <Route path="/test-menu/:id" element={<TestMenu />} />
+                <Route path="/test-menu-item/:id" element={<TestMenuItem />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
