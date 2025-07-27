@@ -8,9 +8,9 @@ const reviewsRoutes = require('./routes/reviews');
 
 const app = express();
 
-// Configure CORS to allow requests from your frontend domain
+// Configuring CORS to allow requests from frontend domain
 app.use(cors({
-  origin: ['https://www.reviewsbymenu.com', 'http://localhost:3000', 'http://localhost:5173'],
+  origin: true, // Allow all origins in development
   credentials: true
 }));
 
@@ -22,5 +22,5 @@ app.use('/api/menu-items/reviews', reviewsRoutes);
 
 const PORT = 5001;
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });

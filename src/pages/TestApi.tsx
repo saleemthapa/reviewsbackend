@@ -12,7 +12,12 @@ const TestApi = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
-    fetch("https://reviewsbackend.onrender.com/api/restaurants")
+    //fetch("http://localhost:5001/api/restaurants")
+    fetch(
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:5001/api/restaurants"
+        : "https://reviewsbackend.onrender.com/api/restaurants"
+    )
       .then((res) => res.json())
       .then((data) => {
         setRestaurants(data);

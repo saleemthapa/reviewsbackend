@@ -15,8 +15,16 @@ const TestMenu = () => {
   useEffect(() => {
     setLoading(true);
     Promise.all([
-      fetch(`https://reviewsbackend.onrender.com/api/restaurants/${id}`).then(res => res.json()),
-      fetch(`https://reviewsbackend.onrender.com/api/menu-items/restaurant/${id}`).then(res => res.json())
+      fetch(
+        process.env.NODE_ENV === "development"
+          ? `http://localhost:5001/api/restaurants/${id}`
+          : `https://reviewsbackend.onrender.com/api/restaurants/${id}`
+      ).then(res => res.json()),
+      fetch(
+        process.env.NODE_ENV === "development"
+          ? `http://localhost:5001/api/menu-items/restaurant/${id}`
+          : `https://reviewsbackend.onrender.com/api/menu-items/restaurant/${id}`
+      ).then(res => res.json())
     ])
       .then(([restaurantData, menuItemsData]) => {
         setRestaurant(restaurantData);
