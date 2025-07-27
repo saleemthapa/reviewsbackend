@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../db');
-
 // Get reviews for a specific menu item using alphanumeric ID
 router.get('/:menu_item_id', async (req, res) => {
   const { menu_item_id } = req.params;
@@ -17,5 +16,4 @@ router.get('/:menu_item_id', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
-
 module.exports = router;
